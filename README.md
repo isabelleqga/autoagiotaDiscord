@@ -7,7 +7,7 @@
   <h1>
     Autoagiota
   </h1> 
-  Discord Bot
+  Discord Bot (<a href="https://github.com/isabelleqga/autoagiotaWhatsapp">Versão para WhatsApp</a>)
 </div>
 
 ## :tropical_fish: Descrição
