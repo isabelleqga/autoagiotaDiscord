@@ -4,8 +4,6 @@
   <img src="https://plusdin.com.br/box/uploads/2023/04/emprestimo-agiota.png" width="autro" height="100px"/>
   <img src="https://static.vecteezy.com/system/resources/previews/023/741/147/original/discord-logo-icon-social-media-icon-free-png.png" width="auto" height="100px"/>
   <img src="https://plusdin.com.br/box/uploads/2023/04/emprestimo-agiota.png" width="autro" height="100px"/>
-  <img src="https://static.vecteezy.com/system/resources/previews/023/741/147/original/discord-logo-icon-social-media-icon-free-png.png" width="auto" height="100px"/>
-  <img src="https://plusdin.com.br/box/uploads/2023/04/emprestimo-agiota.png" width="autro" height="100px"/>
   <h1>
     Autoagiota
   </h1> 
