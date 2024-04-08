@@ -25,7 +25,7 @@ def save_status(status):
 
 # !!!Inserir USERNAME do usuário que pode alterar os registros!!!
 admin = 'isabelleqga'
-value = 'R$ 30,00'
+value = '30'
 method = '84998368093'
 
 # Lista de nomes 'reais' que irão aparecer nas respostas
@@ -113,7 +113,7 @@ async def register_payment(message, nome, mes):
   # Verifica se o pagamento já foi registrado para este mês
   if status.get(nome.split()[0], {}).get(mes, False):
       await message.channel.send(
-          f"👍 {nome} já pagou em {mes}! "
+          f"👍 {nome} {get_emoji(nome)} já pagou em {mes}! "
       )
   else:
     # Atualiza o status do pagamento no JSON
@@ -122,7 +122,7 @@ async def register_payment(message, nome, mes):
     
     # Envia uma mensagem confirmando o registro do pagamento
     await message.channel.send(
-        f"👏 Boa, {nome}! Seu pagamento de **{mes}** foi registrado.\n\n"
+        f"👏 Boa, {nome} {get_emoji(nome)}! Seu pagamento de **{mes}** foi registrado.\n\n"
     )
     # Lista os faltantes (se houver)
     await send_missing_payment_message(message, mes, get_unpaid_names(mes))
@@ -136,7 +136,7 @@ async def send_missing_payment_message(message, mes, faltantes):
               "\n".join(
                   [f"- {name + ' ' + get_emoji(name)}"
                   for name in faltantes]) +
-              "\n\n 💵 *Valor: "+value+"*\n📲 *Pix: "+method+"*\n-----------------"
+              "\n\n 💵 *Valor: R$ "+value+",00*\n📲 *Pix: "+method+"*\n-----------------"
           )
       else:
           # Mais de uma pessoa não pagou
@@ -144,16 +144,37 @@ async def send_missing_payment_message(message, mes, faltantes):
               f"-----------------\n**👺📅 Faltantes de {mes}:**\n\n" + "\n".join(
                   [f"- {name + ' ' + get_emoji(name)}"
                   for name in faltantes]) +
-              "\n\n 💵 *Valor: "+value+"*\n📲 *Pix: "+method+"*\n-----------------"
+              "\n\n 💵 *Valor: R$ "+value+",00*\n📲 *Pix: "+method+"*\n-----------------"
           )
       await message.channel.send(
-          f"💰 **Temos R$ {30*sum(1 for payments in status.values() for payment in payments.values() if payment)},00 na Caixinha.**"
+          f"💰 **Temos R$ {int(value)*sum(1 for payments in status.values() for payment in payments.values() if payment)},00 na Caixinha.**"
       )
   else:
       # Mensagem de todos os pagamentos do mês feitos
       await message.channel.send(
-          f"-----------------\n🎉 Parabéns, galera! Todos os pagamentos de **{mes}** foram feitos! \n\n💰 **Atualmente temos R$ {30*sum(1 for payments in status.values() for payment in payments.values() if payment)},00 na Caixinha.**\n----------------- \n👋 Até a próxima!"
+          f"-----------------\n🎉 Parabéns, galera! Todos os pagamentos de **{mes}** foram feitos! \n\n💰 **Atualmente temos R$ {int(value)*sum(1 for payments in status.values() for payment in payments.values() if payment)},00 na Caixinha.**\n----------------- \n👋 Até a próxima!"
       )
+
+def get_status_general():
+  status_message = "-----------------\n📅 **Faltantes por mês:**\n\n"
+  for month_number in range(1, 13):
+      mes = months.get(str(month_number), 'x')
+      unpaid_names = get_unpaid_names(mes)
+      num_unpaid = len(unpaid_names)
+      emoji = ""
+      if num_unpaid == 0:
+          emoji = "🍀"
+      elif 1 <= num_unpaid <= 5:
+          emoji = "🐟"
+      elif 6 <= num_unpaid <= 9:
+          emoji = "🦥"
+      elif 10 <= num_unpaid <= 12:
+          emoji = "🦧"
+      elif num_unpaid == 13:
+          emoji = "💤"
+      status_message += f"- {emoji}  _{mes.capitalize()}_: **{num_unpaid}**\n"
+  status_message += "\n-----------------"
+  return status_message
 
 
 @client.event
@@ -183,7 +204,7 @@ async def on_message(message):
           if mes != "x": #Verifica se digitou um mês
               await send_missing_payment_message(message, mes, get_unpaid_names(mes))
           else:
-              await message.channel.send("📅 Lembre-se do mês do pagamento!")
+              await message.channel.send(get_status_general())
       else:
           await message.channel.send("🤔 Não entendi...")
   # Caso o autor seja um usuário qualquer: Bot não obedece
