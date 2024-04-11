@@ -47,10 +47,10 @@
 
 ## :star: Funcionalidades
 - Comandos:
-  - !<nome><numero_mes>: Registra pagamento da pessoa em um mês específico e retorna lista de faltantes do mês. Caso o pagamento já tenho sido registrado, retorna mensagem de acordo.
+  - !{nome}{numero_mes}: Registra pagamento da pessoa em um mês específico e retorna lista de faltantes do mês. Caso o pagamento já tenho sido registrado, retorna mensagem de acordo.
     - 👏 Boa, {nome}! Seu pagamento de **{mes}** foi registrado.
     - 👍 {nome} já pagou em {mes}!
-  - !status<numero_mes>: Retorna lista de faltantes do mês
+  - !status{numero_mes}: Retorna lista de faltantes do mês
     - 👺📅 Faltantes de {mes}: 💵 Valor: R$ {value},00 📲 Pix: {method} 💰 Temos R$ {sum} na Caixinha.
     - 🎉 Parabéns, galera! Todos os pagamentos de {mes} foram feitos! 💰 Atualmente temos R$ {sum} na Caixinha.
   - !status: Retorna contagem de faltas em cada um dos meses
